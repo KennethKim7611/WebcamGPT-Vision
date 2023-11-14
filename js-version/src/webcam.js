@@ -24,8 +24,7 @@ function captureImage() {
 
 // Send the image to the server for processing
 function processImage(base64Image) {
-    toggleLoader(true); // Show the loader
-
+    toggleLoader(true);
     fetch('process_image', {
         method: 'POST',
         headers: {
@@ -40,7 +39,9 @@ function processImage(base64Image) {
 
 // Handle the server response
 function handleResponse(data) {
-    toggleLoader(false); // Hide the loader
+    const chatbox = document.getElementById('chatbox');
+    console.log("handleResponse - chatbox content:", chatbox.innerHTML);
+
     if(data.error) {
         console.error(data.error);
         appendToChatbox(`Error: ${data.error}`, true);
@@ -51,30 +52,28 @@ function handleResponse(data) {
 
 // Handle any errors during fetch
 function handleError(error) {
-    toggleLoader(false); // Hide the loader
+    toggleLoader(false);
     console.error('Fetch error:', error);
     appendToChatbox(`Error: ${error.message}`, true);
 }
 
 // Toggle the visibility of the loader
 function toggleLoader(show) {
-    document.querySelector('.loader').style.display = show ? 'block' : 'none';
+    const loader = document.querySelector('.loader');
+    if (loader) {
+        loader.style.display = show ? 'block' : 'none';
+    }
 }
 
 // Append messages to the chatbox
 function appendToChatbox(message, isUserMessage = false) {
     const chatbox = document.getElementById('chatbox');
-    const messageElement = document.createElement('div');
-    const timestamp = new Date().toLocaleTimeString(); // Get the current time as a string
-    
-    // Assign different classes based on the sender for CSS styling
-    messageElement.className = isUserMessage ? 'user-message' : 'assistant-message';
+    chatbox.innerHTML = ''; // Clear existing content
 
-    messageElement.innerHTML = `<div class="message-content">${message}</div>
-                                <div class="timestamp">${timestamp}</div>`;
-    if (chatbox.firstChild) {
-        chatbox.insertBefore(messageElement, chatbox.firstChild);
-    } else {
+    if (!isUserMessage) {
+        const messageElement = document.createElement('div');
+        messageElement.className = 'assistant-message';
+        messageElement.innerText = message;
         chatbox.appendChild(messageElement);
     }
 }
@@ -110,9 +109,11 @@ function switchCamera() {
 // Event listeners
 document.addEventListener('DOMContentLoaded', function() {
     initializeWebcam();
+    const captureButton = document.getElementById('capture');
+    const switchCameraButton = document.getElementById('switch-camera');
 
-    document.getElementById('capture').addEventListener('click', captureImage);
-    document.getElementById('switch-camera').addEventListener('click', switchCamera());
-
-    // Other event listeners here...
+    if (captureButton && switchCameraButton) {
+        captureButton.addEventListener('click', captureImage);
+        switchCameraButton.addEventListener('click', switchCamera());
+    }
 });

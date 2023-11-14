@@ -1,32 +1,168 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta charset="UTF-8">
     <title>WebcamGPT-Vision</title>
     <link rel="stylesheet" href="style.css">
+    <style>
+        body {
+            font-family: 'Comic Sans MS', cursive, sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            margin: 0;
+            background-color: #ffcc99; /* Light festive color */
+            padding-bottom: 50px;
+            overflow:hidden;
+        }
+
+        #content-container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            max-width: 1200px;
+            margin: 20px auto;
+            justify-content: space-around;
+        }
+
+        .intro {
+            text-align: center;
+            font-size: 1.5em;
+            margin-bottom: 20px;
+        }
+
+        #webcam-container {
+            position: relative;
+            width: 100%;
+            max-width: 640px;
+            background-color: #ff6666;
+            padding: 20px;
+            border-radius: 15px;
+            border: 5px solid #ff6600; /* Festive border */
+            box-shadow: 5px 5px 15px rgba(0,0,0,0.3);
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        #webcam {
+            width: 100%;
+            border-radius: 15px;
+        }
+
+        /* Updated Button Styles */
+        #capture, #switch-camera {
+            background-color: #ff9900; /* Festive orange */
+            color: #ffffff;
+            border: none;
+            border-radius: 15px;
+            padding: 10px 20px;
+            font-size: 20px;
+            cursor: pointer;
+            font-family: 'Comic Sans MS', cursive, sans-serif;
+            box-shadow: 3px 3px 10px rgba(0,0,0,0.2);
+            transition: all 0.3s ease;
+        }
+
+        #capture:hover, #switch-camera:hover {
+            background-color: #e68a00; /* Darker shade for hover */
+            transform: scale(1.1);
+        }
+        .buttons {
+            width: 100%;
+            display: flex;
+            justify-content: space-around;
+            margin-top: 10px;
+        }
+
+        /* Fun Animations */
+        @keyframes buttonClick {
+            0% { transform: scale(1); }
+            50% { transform: scale(0.9); }
+            100% { transform: scale(1); }
+        }
+
+        #capture:active, #switch-camera:active {
+            animation: buttonClick 0.3s;
+        }
+
+        #chatbox {
+            margin-top: 1em;
+            font-size: 3em; /* Increased font size */
+            height: 200px; /* Adjusted height */
+            width: 100%;
+            padding: 20px;
+            background-color: #66b3ff;
+            border-radius: 8px;
+            overflow: hidden;
+        }
+
+        .loader {
+            border: 6px solid #f3f3f3;
+            border-top: 6px solid #3498db;
+            border-radius: 50%;
+            width: 50px;
+            height: 50px;
+            animation: spin 2s linear infinite;
+            margin: auto;
+            display: none;
+        }
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        .credit {
+            text-align: center;
+            font-size: 1em;
+            margin-top: 20px;
+        }
+
+        @media (max-width: 768px) {
+            #webcam-container {
+                padding: 10px;
+            }
+
+            #capture, #switch-camera {
+                font-size: 16px;
+            }
+
+            #chatbox {
+                font-size: 1.5em;
+                height: 100px;
+            }
+        }
+    </style>
 </head>
 <body>
     <div id="content-container">
-        <div id="webcam-container">
-            <video id="webcam" autoplay playsinline width="640" height="480"></video>
-            <canvas id="canvas" width="640" height="480" style="display: none;"></canvas>
-            <button id="capture">Capture</button>
-            <button id="switch-camera">Switch Camera</button>
+        <div class="intro">
+            Are you smiling? by Kenneth Kim
+            <br>
+            Powered by OpenAI Vision API
         </div>
-
+        <div id="webcam-container">
+            <video id="webcam" autoplay playsinline width="400" height="300"></video>
+            <canvas id="canvas" width="640" height="480" style="display: none;"></canvas>
+            <div class="buttons">
+                <button id="capture">Are you Smiling?</button>
+                <button id="switch-camera">Switch Camera</button>
+            </div>
+        </div>
         <div id="chatbox">
-            <!-- Loader will go here, hidden initially -->
             <div class="loader" style="display: none;"></div>
-            <!-- Chat messages with HTML tags will be appended here -->
-        </div>     
+            <!-- Text output can be added here -->
+        </div>
+        <div class="credit">
+            Webcam Vision API Framework - Benjamin De Kraker
+            <br>
+            Button reference - Juxtaposed
+        </div>
     </div>
 
     <script src="webcam.js"></script>
-
-    <div id="footer">
-        Webcam is local on your browser, and <b>no images or keys are saved</b> by this demo.<br>
-        Dev'd by <a href="https://twitter.com/BenjaminDEKR">Benjamin De Kraker (Follow on X)</a>
-    </div>
 </body>
 </html>
