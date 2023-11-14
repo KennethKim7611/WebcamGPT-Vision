@@ -17,9 +17,30 @@ function captureImage() {
     const canvas = document.getElementById('canvas');
     const context = canvas.getContext('2d');
     context.drawImage(video, 0, 0, canvas.width, canvas.height);
-
+    
+    // Convert canvas image to a base64 URL
     const base64Image = canvas.toDataURL('image/jpeg').split(',')[1];
+    
+    // Process the image
     processImage(base64Image);
+}
+
+function processImage(base64Image) {
+    fetch('/.netlify/functions/process_image', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ image: base64Image }), // Make sure to match the key with your serverless function's expected payload
+    })
+    .then(response => response.json())
+    .then(data => {
+        console.log(data);
+        // You may want to call handleResponse(data) here if you want to handle the data
+    })
+    .catch((error) => {
+        console.error('Error:', error);
+    });
 }
 
 // Send the image to the server for processing
