@@ -1,4 +1,3 @@
 [build]
-  base = "js-version/" # Only needed if your project is in a subdirectory.
-  publish = "js-version/.next" # Adjust if you have a custom distDir.
-  command = "npm run build" # Or "yarn build", whichever you're using.
+  publish = "src"
+  command = "echo 'No build step'"
