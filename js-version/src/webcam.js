@@ -23,19 +23,20 @@ function captureImage() {
 }
 
 // Send the image to the server for processing
-function processImage(base64Image) {
-    toggleLoader(true);
-    fetch('process_image', {
-        method: 'POST',
-        headers: {
-            'Content-Type': 'application/json'
-        },
-        body: JSON.stringify({ image: base64Image })
-    })
-    .then(response => response.json())
-    .then(handleResponse)
-    .catch(handleError);
-}
+fetch('/.netlify/functions/process_image', {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify({ data: base64Image }),
+  })
+  .then(response => response.json())
+  .then(data => {
+    console.log(data);
+  })
+  .catch((error) => {
+    console.error('Error:', error);
+  });
 
 // Handle the server response
 function handleResponse(data) {
