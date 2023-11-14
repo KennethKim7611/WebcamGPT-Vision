@@ -7,7 +7,6 @@ function initializeWebcam() {
         })
         .catch(error => {
             console.error('getUserMedia error:', error);
-            // You can update this to show an error message to the user in the UI.
         });
 }
 
@@ -25,40 +24,24 @@ function captureImage() {
     processImage(base64Image);
 }
 
+// Function to send the image to the server for processing
 function processImage(base64Image) {
     fetch('/.netlify/functions/process_image', {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json',
         },
-        body: JSON.stringify({ image: base64Image }), // Make sure to match the key with your serverless function's expected payload
+        body: JSON.stringify({ image: base64Image }),
     })
     .then(response => response.json())
     .then(data => {
         console.log(data);
-        // You may want to call handleResponse(data) here if you want to handle the data
+        // Add additional code here to handle the response data
     })
     .catch((error) => {
         console.error('Error:', error);
     });
 }
-
-// Send the image to the server for processing
-function processImage(base64Image) {
-fetch('/.netlify/functions/process_image', {
-    method: 'POST',
-    headers: {
-      'Content-Type': 'application/json',
-    },
-    body: JSON.stringify({ data: base64Image }),
-  })
-  .then(response => response.json())
-  .then(data => {
-    console.log(data);
-  })
-  .catch((error) => {
-    console.error('Error:', error);
-  });
 
 // Handle the server response
 function handleResponse(data) {
