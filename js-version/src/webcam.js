@@ -44,7 +44,7 @@ function handleResponse(data) {
 
     if(data.error) {
         console.error(data.error);
-        appendToChatbox(`Error: ${data.error}`, true);
+        appendToChatbox("Error - Rate limit Reached");
         return;
     }
     appendToChatbox(data.choices[0].message.content);
