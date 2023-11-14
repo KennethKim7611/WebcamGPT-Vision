@@ -4,7 +4,8 @@
     "description": "Node.js backend for the WebcamGPT-Vision application to process images with OpenAI's GPT-4 Vision API.",
     "main": "server.js",
     "scripts": {
-        "start": "node server.js"
+        "start": "node server.js",
+        "build": "node server.js"
     },
     "repository": {
         "type": "git",
