@@ -44,6 +44,7 @@ function processImage(base64Image) {
 }
 
 // Send the image to the server for processing
+function processImage(base64Image) {
 fetch('/.netlify/functions/process_image', {
     method: 'POST',
     headers: {
