@@ -1,3 +1,4 @@
 [build]
   publish = "src"
+  functions = "netlify/functions"
   command = "echo 'No build step'"
